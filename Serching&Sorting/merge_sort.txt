@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void merge(vector<int> &v, int s,int m, int e)
+{
+    vector<int> l;
+    vector<int> r;
+    for(int i=s;i<=m;i++)
+    {
+        l.push_back(v[i]);
+    }
+    for(int i=m+1;i<=e;i++)
+    {
+        r.push_back(v[i]);
+    }
+    int i=0,j=0,ind=s;
+    while(i<l.size() && j<r.size())
+    {
+        if(l[i]<r[j])
+        {
+            v[ind]=l[i];
+            i++;
+            ind++;
+        }
+        else
+        {
+            v[ind]=r[j];
+            j++;
+            ind++;
+        }
+    }
+    while(i<l.size()){
+        v[ind]=l[i];
+            i++;
+            ind++;
+    }
+    while(j<r.size()){
+        v[ind]=r[j];
+            j++;
+            ind++;
+    }
+    
+}
+
+void merge_sort(vector<int> &v, int s,int e){
+	if(s<e)
+	{
+	    int q=(s+e)/2;
+	    merge_sort(v,s,q);
+	    merge_sort(v,q+1,e);
+	    merge(v,s,q,e);
+	    
+	}
+}
+int main(){
+    int n,p;
+    cout<<"Enter size: ";
+    cin>>n;
+	vector<int> v(n,-1);
+	for(int i=0;i<n;i++)
+	{
+	    cout<<"Enter value for "<< i<<"th element: ";
+	    cin>>v[i];
+	}
+	merge_sort(v,0,n-1);
+	for(int i=0;i<n;i++)
+	{
+	    cout<<v[i]<<" ";
+	}
+	return 0;
+}
